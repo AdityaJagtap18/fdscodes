@@ -1,0 +1,67 @@
+groupA = ['a', 'b', 'c', 'd']
+groupB = ['b', 'c', 'd', 'k']
+groupC = ['a', 'f', 'g']
+
+lenA = len(groupA)
+lenB = len(groupB)
+lenC = len(groupC)
+
+# grp a and b
+r = []
+
+for i in range(lenA):
+    for j in range(lenB):
+        if groupA[i] == groupB[j]:
+            r.append(groupA[i])
+
+print(r)
+
+
+
+# grp a or b
+
+r2 = []
+flag = 0
+
+for i in range(lenA):
+    for j in range(lenB):
+        if groupA[i] == groupB[j]:
+            flag = 1
+    if flag == 0:
+        r2.append(groupA[i])
+    flag = 0
+for i in range(lenB):
+    for j in range(lenA):
+        if groupB[i] == groupA[j]:
+            flag = 1
+    if flag == 0:
+        r2.append(groupB[i])
+    flag = 0
+print(r2)
+
+r1 = r+r2
+
+print(r1)
+
+# nor a or b
+
+r3 = []
+flag = 0
+
+for i in range(lenC):
+    for j in range(lenB):
+        if groupC[i] == groupB[j]:
+            flag = 1
+            break
+    for j in range(lenA):
+        if groupC[i] == groupA[j]:
+            flag = 1
+            break
+    if flag == 0:
+        r3.append(groupC[i])
+    flag = 0
+
+# r4 = set(r3)
+# r5 = list(r4)
+
+print(r3)

@@ -1,0 +1,63 @@
+str1 = input("Enter your string: ")
+list1 = str1.split()
+m = 0
+word = 0
+
+print("Longest word is: ")
+
+for i in range(len(list1)):
+    if m < len(list1[i]):
+        m = len(list1[i])
+        word = i
+
+print(list1[word])
+
+sub = input("Enter the sub string whoes frequency you want to cheak :")
+
+count = 0
+
+for i in range(len(list1)):
+    if sub == list1[i]:
+        count += 1
+
+print("Frequency of '", sub, "' is ", count)
+
+print("Frequency of each word is: ")
+
+list2 = set(list1)
+list3 = list(list2)
+list4 = []
+list5 = []
+
+for i in range(len(list3)):
+    counter = 0
+    for j in range(len(list1)):
+        if list3[i] == list1[j]:
+            counter += 1
+    list4 = list3[i], counter
+    list5.append(list4)
+
+print(list5)
+
+
+str2 = input("Enter a string you wanna check for palindrome: ")
+if str2[::-1] == str2:
+    print("Yes it is a palindrome")
+else:
+    print("No it is not a palindrome")
+
+print("Displaying the index of the substring: ")
+sub2 = input("Enter the substring: ")
+n = 0
+sublen = len(sub2)
+index = 0
+flag = 0
+
+for i in range(len(str1)):
+        if str1[i] == sub2[n]:
+            flag = 1
+            print(str1[i],i,n)
+            n+=1
+        if n == sublen:
+            flag = 0
+            n = 0

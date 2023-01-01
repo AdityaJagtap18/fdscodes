@@ -1,0 +1,160 @@
+#include <iostream>
+using namespace std;
+
+class stack
+{
+public:
+    int top = -1;
+    int size = 20;
+    char *arr = new char[20];
+
+    bool isFull(stack *s)
+    {
+        if (s->top == s->size - 1)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    bool isEmpty(stack *s)
+    {
+        if (s->top < 0)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    void push(stack *s, char val)
+    {
+        if (!s->isFull(s))
+        {
+            s->top++;
+            s->arr[s->top] = val;
+        }
+        else
+        {
+            cout << "Stack Overflow\n";
+        }
+    }
+
+    char pop(stack *s)
+    {
+        char popped_ele;
+        if (s->isEmpty(s))
+        {
+            cout << "Stack Underflow. Invalid Expression" << endl;
+            return 'x';
+            exit(0);
+        }
+        else
+        {
+            popped_ele = s->arr[s->top];
+            s->top--;
+            return popped_ele;
+        }
+    }
+
+    bool isOperator(char c)
+    {
+        if (c == '+' || c == '-' || c == '*' || c == '/')
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    int precedence(char c)
+    {
+        if (c == '*' || c == '/')
+            return 2;
+        else if (c == '+' || c == '-')
+            return 1;
+        else
+            return -1;
+    }
+
+    string InfixToPostfix(stack *s, string infix)
+    {
+        string postfix;
+        for (int i = 0; i < infix.length(); i++)
+        {
+            if ((infix[i] >= 'a' && infix[i] <= 'z') || (infix[i] >= 'A' && infix[i] <= 'Z'))
+            {
+                postfix += infix[i];
+            }
+            else if (infix[i] == '(')
+            {
+                s->push(s, infix[i]);
+            }
+            else if (infix[i] == ')')
+            {
+                while ((s->arr[s->top] != '(') && (!s->isEmpty(s)))
+                {
+                    postfix += s->arr[s->top];
+                    s->pop(s);
+                }
+                if (s->arr[s->top] == '(')
+                {
+                    s->pop(s);
+                }
+            }
+            else if (s->isOperator(infix[i]))
+            {
+                if (s->isEmpty(s))
+                {
+                    s->push(s, infix[i]);
+                }
+                else
+                {
+                    if (s->precedence(infix[i]) > s->precedence(s->arr[s->top]))
+                    {
+                        s->push(s, infix[i]);
+                    }
+                    else
+                    {
+                        while ((!s->isEmpty(s) && s->precedence(infix[i])) <= (s->precedence(s->arr[s->top])))
+                        {
+                            postfix += s->arr[s->top];
+                            s->pop(s);
+                        }
+                        s->push(s, infix[i]);
+                    }
+                }
+            }
+        }
+        while (!s->isEmpty(s))
+        {
+            postfix+= s->arr[s->top];
+            s->pop(s);
+        }
+        return postfix;
+        
+    }
+};
+
+int main(){
+    stack* s = new stack;
+    // s->arr = new char[20];
+    string infix, postfix;
+    cout << "Enter an infix expression: " << endl;
+    cin >> infix;
+
+    cout << "Infix Expression: " << infix << endl;
+    postfix = s->InfixToPostfix(s,infix);
+    // postfix = s->InfixToPostfix()
+    cout<<endl
+        <<"Postfix: "<<postfix<<endl;
+
+        return 0;
+}
