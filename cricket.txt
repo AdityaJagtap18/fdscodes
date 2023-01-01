@@ -65,3 +65,27 @@ for i in range(lenC):
 # r5 = list(r4)
 
 print(r3)
+
+
+r6 = []
+flag = 0
+
+for i in range(lenA):
+    for j in range(lenC):
+        if groupC[j] == groupA[i]:
+            flag = 1
+    if flag == 0:
+        r6.append(groupA[i])
+    flag = 0
+for i in range(lenB):
+    for j in range(lenC):
+        if groupC[j] == groupB[i]:
+            flag = 1
+    if flag == 0:
+        r6.append(groupB[i])
+    flag = 0
+
+r7= set(r6)
+r8 = list(r7)
+
+print(r8)
